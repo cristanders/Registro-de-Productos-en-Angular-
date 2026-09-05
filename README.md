@@ -8,18 +8,28 @@ Aplicación web desarrollada en **Angular** para el registro y gestión de produ
 ---
 
 ## Arquitectura del Proyecto
-El proyecto sigue una estructura modular por características para mantener el código limpio, escalable y fácil de mantener:
+El proyecto sigue una estructura por capas o modular por características para mantener el código limpio, escalable y fácil de mantener:
 
 src/
+
 └── app/
+
     └── feature/
+
         ├── components/
+
         │   └── producto-formulario/
+
         │       ├── producto-formulario.ts
+
         │       ├── producto-formulario.html
+
         │       └── producto-formulario.css
+
         └── services/
+
             └── producto.ts
+            
 
 # Tecnologías y Características Implementadas
 
