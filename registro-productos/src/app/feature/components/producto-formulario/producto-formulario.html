@@ -1,0 +1,99 @@
+<div class="form-container">
+  <h2>Registro de Productos</h2>
+
+  <div *ngIf="mensajeExito" class="alert-success">
+    {{ mensajeExito }}
+  </div>
+
+  <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Nombre -->
+    <div class="form-group">
+      <label for="nombre">Nombre del Producto:</label>
+      <input type="text" id="nombre" formControlName="nombre" class="form-control">
+      
+      <!-- Mensajes de error  con *ngIf -->
+      <div *ngIf="productoForm.get('nombre')?.invalid && productoForm.get('nombre')?.touched" class="error-message">
+        <small *ngIf="productoForm.get('nombre')?.errors?.['required']">El nombre es obligatorio.</small>
+        <small *ngIf="productoForm.get('nombre')?.errors?.['minlength']">Debe tener al menos 3 caracteres.</small>
+      </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <textarea id="descripcion" formControlName="descripcion" class="form-control"></textarea>
+      
+      <div *ngIf="productoForm.get('descripcion')?.invalid && productoForm.get('descripcion')?.touched" class="error-message">
+        <small *ngIf="productoForm.get('descripcion')?.errors?.['required']">La descripcion es obligatoria.</small>
+        <small *ngIf="productoForm.get('descripcion')?.errors?.['maxlength']">Maximo 350 caracteres.</small>
+      </div>
+    </div>
+
+    <!-- Precio -->
+    <div class="form-group">
+      <label for="precio">Precio (Q):</label>
+      <input type="number" id="precio" formControlName="precio" class="form-control">
+      
+      <div *ngIf="productoForm.get('precio')?.invalid && productoForm.get('precio')?.touched" class="error-message">
+        <small *ngIf="productoForm.get('precio')?.errors?.['required']">El precio es obligatorio.</small>
+        <small *ngIf="productoForm.get('precio')?.errors?.['min']">El precio debe ser mayor a 0.</small>
+      </div>
+    </div>
+
+    <!-- Categoria -->
+    <div class="form-group">
+      <label for="categoria">Categoria:</label>
+      <select id="categoria" formControlName="categoria" class="form-control">
+        <option value="">Seleccione una categoria</option>
+        <option value="Tecnología">Tecnologia</option>
+        <option value="Hogar">Hogar</option>
+        <option value="Ropa">Ropa</option>
+        <option value="Alimentos">Alimentos</option>
+      </select>
+      
+      <div *ngIf="productoForm.get('categoria')?.invalid && productoForm.get('categoria')?.touched" class="error-message">
+        <small *ngIf="productoForm.get('categoria')?.errors?.['required']">Debe seleccionar una categoria.</small>
+      </div>
+    </div>
+
+    <!-- Campo Stock -->
+    <div class="form-group">
+      <label for="stock">Stock:</label>
+      <input type="number" id="stock" formControlName="stock" class="form-control">
+      
+      <div *ngIf="productoForm.get('stock')?.invalid && productoForm.get('stock')?.touched" class="error-message">
+        <small *ngIf="productoForm.get('stock')?.errors?.['required']">El stock es obligatorio.</small>
+        <small *ngIf="productoForm.get('stock')?.errors?.['min']">El stock no puede ser negativo.</small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit">Registrar Producto</button>
+
+  </form>
+</div>
+
+<!-- Tabla de Productos Registrados -->
+<div class="table-container" *ngIf="listaProductos.length > 0">
+  <h3>Productos Registrados</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Categoría</th>
+        <th>Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of listaProductos">
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.descripcion }}</td>
+        <td>Q{{ p.precio | number:'1.2-2' }}</td>
+        <td>{{ p.categoria }}</td>
+        <td>{{ p.stock }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
